@@ -12,7 +12,10 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin:[],
+  credentials:true
+}));
 app.use(cookieParser());
 app.use("/user", userRouter);
 app.use("/products", auth,  productRouter);

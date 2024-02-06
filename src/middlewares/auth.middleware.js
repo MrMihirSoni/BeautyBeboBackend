@@ -32,7 +32,11 @@ const auth = async (req, res, next) => {
                     );
                     req.body.userId = decoded.userId;
                     req.body.userName = decoded.userName;
-                    res.cookie("accessToken", accessToken);
+                    res.cookie("accessToken", accessToken, {
+                      httpOnly: true,
+                      secure: true,
+                      sameSite: "none",
+                    });
                     next();
                   }
                 }

@@ -49,7 +49,7 @@ const login = async (req, res) => {
     if (!user) throw new Error("You need to register first!");
     else {
       bcrypt.compare(password, user.password, (err, result) => {
-        if (result){
+        if (result) {
           const accessToken = jwt.sign(
             { userId: user._id, userName: user.userName },
             process.env.ACCESS_TOKEN_SECRET_KEY,
@@ -64,15 +64,22 @@ const login = async (req, res) => {
               expiresIn: "7d",
             }
           );
-          res.cookie("accessToken", accessToken);
-          res.cookie("refreshToken", refreshToken);
+          res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+          });
+          res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+          });
           res.status(200).send({
             msg: "Login successful!",
             token: accessToken,
             refreshToken: refreshToken,
           });
-        }
-        else res.status(400).json({error: "Wrong password!"});
+        } else res.status(400).json({ error: "Wrong password!" });
       });
     }
   } catch (error) {
