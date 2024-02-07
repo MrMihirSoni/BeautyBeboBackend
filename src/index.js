@@ -14,7 +14,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cors({
-  origin:[],
+  origin:["https://beautybebobackend-production.up.railway.app", "http://localhost:5173"],
   credentials:true
 }));
 app.use(cookieParser());
