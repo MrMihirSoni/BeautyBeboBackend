@@ -4,8 +4,9 @@ const cookieParser = require("cookie-parser");
 const connection = require("./configs/db");
 const userRouter = require("./routes/user.routes");
 const productRouter = require("./routes/product.routes");
-const auth = require("./middlewares/auth.middleware");
 const cartRouter = require("./routes/cart.routes");
+const addressRouter = require("./routes/address.routes");
+const auth = require("./middlewares/auth.middleware");
 require("dotenv").config();
 
 const app = express();
@@ -18,8 +19,9 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use("/user", userRouter);
-app.use("/products", auth,  productRouter);
+app.use("/products", productRouter);
 app.use("/cart", auth, cartRouter);
+app.use("/address", auth, addressRouter)
 
 app.get("/", (req, res) => {
   res.status(200).send({ message: "Welcome to Beauty Bebo!" });

@@ -27,7 +27,6 @@ const showCart = async (req, res) => {
       let myMainCart = await Promise.all(
         myCart.map(async (ele) => {
           const product = await ProductModel.findOne({ _id: ele.productId });
-          console.log(product);
           return product;
         })
       );
@@ -45,14 +44,12 @@ const deleteCart = async (req, res) => {
     const productToDelete = await CartModel.findOne({ productId: id, userId });
     if (productToDelete) {
       const idToDelete = productToDelete._id;
-      await CartModel.findByIdAndDelete({ _id: idToDelete });
+      await CartModel.findByIdAndDelete(idToDelete);
       const deletedProduct = await ProductModel.findOne({ _id: id });
-      res
-        .status(200)
-        .json({
-          message: "Item is removed from cart!",
-          deletedProduct: deletedProduct,
-        });
+      res.status(200).json({
+        message: "Item is removed from cart!",
+        deletedProduct: deletedProduct,
+      });
     } else
       throw new Error("Product not found! please pass a valid product id!");
   } catch (error) {
