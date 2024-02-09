@@ -9,13 +9,12 @@ const getAllProducts = async (req, res) => {
   } else {
     limit = 0; // Default value if limit is not provided or not a valid number
   }
-  console.log(limit)
   try {
     let data;
     if (limit > 0) {
-      data = await ProductModel.find(category).limit(limit);
+      data = await ProductModel.find({category}).limit(limit);
     } else {
-      data = await ProductModel.find(category);
+      data = await ProductModel.find({category});
     }
 
     res.status(200).json({ data });
