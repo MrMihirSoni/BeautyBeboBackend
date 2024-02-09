@@ -3,7 +3,7 @@ const ProductModel = require("../models/product.model");
 const getAllProducts = async (req, res) => {
   let { category, limit } = req.query;
   // const query = req.query;
-  
+
   if (limit && !isNaN(limit)) {
     limit = parseInt(limit);
   } else {
@@ -11,10 +11,14 @@ const getAllProducts = async (req, res) => {
   }
   try {
     let data;
-    if (limit > 0) {
-      data = await ProductModel.find({category}).limit(limit);
+    if (limit > 0 && category != undefined) {
+      data = await ProductModel.find({ category }).limit(limit);
+    } else if (limit > 0 && category == undefined) {
+      data = await ProductModel.find().limit(limit);
+    } else if (limit == 0 && category != undefined) {
+      data = await ProductModel.find({ category });
     } else {
-      data = await ProductModel.find({category});
+      data = await ProductModel.find();
     }
 
     res.status(200).json({ data });
