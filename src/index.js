@@ -14,7 +14,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cors({
-  origin:["https://beautybebobackend-production.up.railway.app", "http://localhost:5173"],
+  origin:["https://beautybebobackend-production.up.railway.app", "http://localhost:5173", "https://mihirsoni-beautybebo.netlify.app"],
   credentials:true
 }));
 app.use(cookieParser());
