@@ -51,4 +51,15 @@ const addProduct = async (req, res) => {
   }
 };
 
-module.exports = { getAllProducts, addProduct };
+const getSingleProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await ProductModel.findOne({ _id: id });
+    if (!product) throw new Error("Product not found!");
+    else res.status(200).json({ product });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { getAllProducts, addProduct, getSingleProduct };
